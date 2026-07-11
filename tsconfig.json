@@ -1,16 +1,14 @@
 {
+  "extends": [
+    "@tsconfig/node24/tsconfig.json",
+    "@tsconfig/strictest/tsconfig.json"
+  ],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "outDir": "dist",
-    "sourceMap": true,
-    "allowJs": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "skipLibCheck": true,
-    "importHelpers": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src/**/*"],
+    "rootDir": "./",
+    "outDir": "./dist",
+    "types": ["node"],
+    "paths": {
+      "#/*": ["./*"]
+    }
+  }
 }
