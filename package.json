@@ -14,9 +14,17 @@
     "typescript": "^7.0.2"
   },
   "scripts": {
-    "dev": "tsx src/index.ts",
+    "dev": "tsx index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@twurple/api": "^8.1.4",
+    "@twurple/auth": "^8.1.4",
+    "@twurple/chat": "^8.1.4",
+    "@twurple/eventsub-ws": "^8.1.4",
+    "yaml": "^2.9.0",
+    "youtubei.js": "^17.2.0"
   }
 }

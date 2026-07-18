@@ -1,0 +1,9 @@
+twitch:
+  channelName: twitchChannel
+
+youtube:
+  channelName: ytChannel
+
+bridge:
+  pollLimitMs: 180000 # 3 mins
+  pollIntervalMs: 5000 # 5 secs
