@@ -1,5 +1,6 @@
 import { TwitchCtx } from "#/types/twitch.js";
 import { YoutubeCtx } from "#/types/youtube.js";
+import { YTAttachError } from "../errors.js";
 import { attachYtStream } from "../youtube/stream.js";
 
 const prefix = "!";
@@ -19,13 +20,23 @@ async function attachCommand(twitch: TwitchCtx, youtube: YoutubeCtx) {
 
         console.log("[Manual] Successfully linked chat with YouTube!");
     } catch (error) {
+        if (error instanceof YTAttachError) {
+            await twitch.chat.say(
+                twitch.channelName,
+                `[Manual] ${error.message}`,
+            );
+
+            return;
+        }
+
         await twitch.chat.say(
             twitch.channelName,
-            "Error linking YT chat, check the console for errors.",
+            "[Manual] Unexpected error when linking chat with YouTube, " +
+                "see console for more details.",
         );
 
-        console.log("[Manual] Error:");
-        console.log(error);
+        console.error("[Manual] Unexpected error:");
+        console.error(error);
     }
 }
 

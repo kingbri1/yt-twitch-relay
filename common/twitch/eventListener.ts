@@ -1,7 +1,8 @@
 import { TwitchCtx } from "#/types/twitch.js";
 import { EventSubWsListener } from "@twurple/eventsub-ws";
-import { pollAttachYtStream } from "../youtube/stream.js";
+import { pollAttachYtStream, stopYtStream } from "../youtube/stream.js";
 import { YoutubeCtx } from "#/types/youtube.js";
+import { YTAbortedError, YTAttachError } from "../errors.js";
 
 export async function setupEventListener(
     twitch: TwitchCtx,
@@ -33,24 +34,28 @@ export async function setupEventListener(
 
             console.log("[Event] Successfully linked chat with YouTube!");
         } catch (error) {
-            console.log("[Event] Error:");
-            console.log(error);
+            if (error instanceof YTAttachError) {
+                await twitch.chat.say(
+                    twitch.channelName,
+                    `[Event] ${error.message}`,
+                );
+            } else if (error instanceof YTAbortedError) {
+                console.log(error.message);
+            } else {
+                await twitch.chat.say(
+                    twitch.channelName,
+                    "[Event] Unexpected error when linking chat with YouTube, " +
+                        "see console for more details.",
+                );
 
-            await twitch.chat.say(
-                twitch.channelName,
-                "[Event] Error when linking chat with YouTube, " +
-                    "see console for more details.",
-            );
+                console.error("[Event] Unexpected error:");
+                console.error(error);
+            }
         }
     });
 
     twitchEventListener.onStreamOffline(user, async (_) => {
-        if (youtube.liveChat) {
-            youtube.liveChat.stop();
-            youtube.liveChat = undefined;
-        }
-
-        await twitch.chat.say(twitch.channelName, "YouTube chat unlinked.");
+        stopYtStream(youtube);
         console.log("[Event] Twitch stream stopped. YouTube chat unlinked.");
     });
 
