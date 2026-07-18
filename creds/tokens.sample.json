@@ -1,0 +1,10 @@
+{
+  "broadcaster": {
+    "accessToken": "",
+    "refreshToken": ""
+  },
+  "bot": {
+    "accessToken": "",
+    "refreshToken": ""
+  }
+}

@@ -1,0 +1,12 @@
+services:
+  bitrelay:
+    container_name: bitrelay
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./creds:/app/creds
+      - ./config.yml:/app/config.yml:ro
+    environment:
+      NODE_ENV: production

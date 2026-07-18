@@ -54,4 +54,5 @@ node_modules/
 config.yml
 
 # Credentials
-creds
+creds/*
+!creds/*.sample.json
