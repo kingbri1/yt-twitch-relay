@@ -17,7 +17,9 @@
     "dev": "tsx index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "auth:bot": "tsx scripts/twitch-auth.ts bot",
+    "auth:broadcaster": "tsx scripts/twitch-auth.ts broadcaster"
   },
   "dependencies": {
     "@twurple/api": "^8.1.4",
